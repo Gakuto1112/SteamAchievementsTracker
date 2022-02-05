@@ -1,0 +1,2 @@
+# SteamAchievementsTracker
+Steamで獲得できそうな実績をマークし、後で確認できるようにするChrome拡張機能です。
