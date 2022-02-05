@@ -1,0 +1,12 @@
+{
+	"manifest_version": 3,
+	"name": "Steam実績トラッカー",
+	"version": "1.0",
+	"description": "Steamで取得できそうな実績をマークし、後で確認できるようにします。",
+	"content_scripts": [
+		{
+			"js": ["SteamAchievementsTracker.js"],
+			"matches": ["https://steamcommunity.com/profiles/*/stats/*/", "https://steamcommunity.com/profiles/*/stats/*/achievements/"]
+		}
+	]
+}
