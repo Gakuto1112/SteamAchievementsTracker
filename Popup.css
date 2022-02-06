@@ -26,6 +26,7 @@ h2:hover {
 }
 .link {
 	text-decoration: underline;
+	cursor: pointer;
 }
 .game_block {
 	display: flex;
@@ -57,6 +58,8 @@ h2:hover {
 }
 .achievement_text_holder {
 	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	width: -webkit-fill-available;
 	margin-left: 5px;
 	background: linear-gradient(to right, #00000080 75%, #6bb64d) !important;
@@ -69,4 +72,42 @@ h2:hover {
 }
 .achievement_description {
 	color: #898989;
+}
+.buttons {
+	display: flex;
+	margin-right: 4px;
+}
+.button {
+	width: 16px;
+	height: 16px;
+	margin: 4px;
+	padding: 4px;
+	overflow: hidden;
+	background-color: #233b4d;
+	border-radius: 2px;
+	cursor: pointer;
+}
+.button:hover {
+	background-color: #67c1f5;
+}
+.button_icon {
+	width: 16px;
+	height: 16px;
+	background: url(https://community.akamai.steamstatic.com/public/shared/images/buttons/icons_16.png?v=5);
+	overflow: hidden;
+}
+.good_icon {
+	background-position: -80px 0px;
+}
+.good_icon_hover {
+	background-position: -112px 0px;
+}
+.good_icon_clicked {
+	background-position: -96px 0px;
+}
+.bad_icon {
+	background-position: -32px 0px;
+}
+.bad_icon_hover {
+	background-position: -48px 0px;
 }
