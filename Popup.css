@@ -13,6 +13,10 @@ h1 {
 }
 h2 {
 	margin-left: 10px;
+	cursor: pointer;
+}
+h2:hover {
+	color: #67c1f5;
 }
 #message {
 	margin-bottom: 20px;
@@ -55,7 +59,7 @@ h2 {
 	display: flex;
 	width: -webkit-fill-available;
 	margin-left: 5px;
-	background-color: #080c11;
+	background: linear-gradient(to right, #00000080 75%, #6bb64d) !important;
 }
 .achievement_text {
 	display: flex;

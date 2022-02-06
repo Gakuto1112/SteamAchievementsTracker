@@ -70,6 +70,7 @@ if(myNameElement) {
 				if(!achievementsTrackData[getAppId()]) {
 					achievementsTrackData[getAppId()] = {};
 					achievementsTrackData[getAppId()]["name"] = document.getElementsByClassName("profile_small_header_location").item(1).innerText.split(" ").slice(0, -1).join(" ");
+					achievementsTrackData[getAppId()]["pageUrl"] = location.href;
 					achievementsTrackData[getAppId()]["imageUrl"] = document.querySelectorAll(".gameLogo > a > img").item(0).src;
 					achievementsTrackData[getAppId()]["achievements"] = {};
 				}
