@@ -39,6 +39,7 @@
 .sat_ballon {
 	position: absolute;
 	width: 100px;
+	top: -40px;
 	margin: 0px;
 	padding: 5px;
 	border-radius: 4px;
@@ -49,6 +50,13 @@
 	background-color: #dbe2e6;
 	transition: 0.5s;
 	opacity: 0;
+	pointer-events: none;
+}
+.sat_ballon_good {
+	left: calc(100% - 108px);
+}
+.sat_ballon_bad {
+	left: calc(100% - 78px);
 }
 .sat_ballon_show {
 	opacity: 1;

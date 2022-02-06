@@ -7,26 +7,15 @@ if(myNameElement) {
 				//ボタンの生成
 				const buttonsDiv = document.createElement("DIV");
 				buttonsDiv.classList.add("sat_buttons");
+				const goodButtonArea = document.createElement("DIV");
 				const goodButton = document.createElement("DIV");
 				goodButton.classList.add("sat_button");
 				const goodIcon = document.createElement("DIV");
 				goodIcon.classList.add("sat_button_icon", "sat_good_icon");
 				goodButton.appendChild(goodIcon);
-				const badButton = document.createElement("DIV");
-				badButton.classList.add("sat_button");
-				const badIcon = document.createElement("DIV");
-				badIcon.classList.add("sat_button_icon", "sat_bad_icon");
-				badButton.appendChild(badIcon);
-				buttonsDiv.appendChild(goodButton);
-				buttonsDiv.appendChild(badButton);
-				element.lastElementChild.appendChild(buttonsDiv);
-				//吹き出しの生成
 				const goodBallon = document.createElement("P");
 				goodBallon.innerText = "この実績は取得できそう！";
-				goodBallon.classList.add("sat_ballon");
-				const goodButtonRect = goodButton.getBoundingClientRect();
-				goodBallon.style.top = window.scrollY + goodButtonRect.top - 60 + "px";
-				goodBallon.style.left = window.scrollX + goodButtonRect.left - 43 + "px";
+				goodBallon.classList.add("sat_ballon", "sat_ballon_good");
 				goodButton.addEventListener("mouseover", () => {
 					goodIcon.classList.add("sat_good_icon_hover");
 					goodBallon.classList.add("sat_ballon_show");
@@ -35,13 +24,18 @@ if(myNameElement) {
 					goodIcon.classList.remove("sat_good_icon_hover");
 					goodBallon.classList.remove("sat_ballon_show");
 				});
-				document.body.append(goodBallon);
+				goodButtonArea.appendChild(goodButton);
+				goodButtonArea.appendChild(goodBallon);
+				buttonsDiv.appendChild(goodButtonArea);
+				const badButton = document.createElement("DIV");
+				badButton.classList.add("sat_button");
+				const badButtonArea = document.createElement("DIV");
+				const badIcon = document.createElement("DIV");
+				badIcon.classList.add("sat_button_icon", "sat_bad_icon");
+				badButton.appendChild(badIcon);
 				const badBallon = document.createElement("P");
 				badBallon.innerText = "この実績は取得できなさそう...";
-				badBallon.classList.add("sat_ballon");
-				const badButtonRect = badButton.getBoundingClientRect();
-				badBallon.style.top = window.scrollY + badButtonRect.top - 60 + "px";
-				badBallon.style.left = window.screenX + badButtonRect.left - 43 + "px";
+				badBallon.classList.add("sat_ballon", "sat_ballon_bad");
 				badButton.addEventListener("mouseover", () => {
 					badIcon.classList.add("sat_bad_icon_hover");
 					badBallon.classList.add("sat_ballon_show");
@@ -50,7 +44,10 @@ if(myNameElement) {
 					badIcon.classList.remove("sat_bad_icon_hover");
 					badBallon.classList.remove("sat_ballon_show");
 				});
-				document.body.append(badBallon);
+				badButtonArea.appendChild(badButton);
+				badButtonArea.appendChild(badBallon);
+				buttonsDiv.appendChild(badButtonArea);
+				element.lastElementChild.appendChild(buttonsDiv);
 			}
 		});
 	}
