@@ -5,6 +5,33 @@ if(myNameElement) {
 	const personaNameTextClassElements = document.getElementsByClassName("persona_name_text_content");
 	let achievementsTrackData;
 
+	function upVoteAchievement(achievementRowElement) {
+		//実績をgoodする
+		achievementRowElement.lastElementChild.classList.remove("sat_bad_row");
+		achievementRowElement.lastElementChild.classList.add("sat_good_row");
+		achievementRowElement.lastElementChild.lastElementChild.firstElementChild.firstElementChild.firstElementChild.classList.add("sat_good_icon_clicked");
+		achievementRowElement.lastElementChild.lastElementChild.lastElementChild.firstElementChild.firstElementChild.classList.remove("sat_bad_icon_clicked");
+		addAchievementsData(achievementRowElement.lastElementChild.firstElementChild.firstElementChild.innerText, { description: achievementRowElement.lastElementChild.firstElementChild.lastElementChild.innerText, imageUrl: achievementRowElement.firstElementChild.firstElementChild.src, vote: 1 });
+	}
+
+	function downVoteAchievement(achievementRowElement) {
+		//実績をbadする
+		achievementRowElement.lastElementChild.classList.remove("sat_good_row");
+		achievementRowElement.lastElementChild.classList.add("sat_bad_row");
+		achievementRowElement.lastElementChild.lastElementChild.firstElementChild.firstElementChild.firstElementChild.classList.remove("sat_good_icon_clicked");
+		achievementRowElement.lastElementChild.lastElementChild.lastElementChild.firstElementChild.firstElementChild.classList.add("sat_bad_icon_clicked");
+		addAchievementsData(achievementRowElement.lastElementChild.firstElementChild.firstElementChild.innerText, { description: achievementRowElement.lastElementChild.firstElementChild.lastElementChild.innerText, imageUrl: achievementRowElement.firstElementChild.firstElementChild.src, vote: -1 });
+	}
+
+	function removeAchievementVote(achievementRowElement) {
+		//実績のgood/badを取り消す
+		achievementRowElement.lastElementChild.classList.remove("sat_good_row");
+		achievementRowElement.lastElementChild.classList.remove("sat_bad_row");
+		achievementRowElement.lastElementChild.lastElementChild.firstElementChild.firstElementChild.firstElementChild.classList.remove("sat_good_icon_clicked");
+		achievementRowElement.lastElementChild.lastElementChild.lastElementChild.firstElementChild.firstElementChild.classList.remove("sat_bad_icon_clicked");
+		removeAchievementsData(achievementRowElement.lastElementChild.firstElementChild.firstElementChild.innerText);
+}
+
 	function sortAchievements() {
 		/*実績の並べ替え
 			1. 取得済み実績 -> <br>×3 -> 緑色実績 -> 無色実績 -> 赤色実績 -> 「〇個の秘密の実績が残っている」
@@ -79,18 +106,8 @@ if(myNameElement) {
 					goodBallon.classList.remove("sat_ballon_show");
 				});
 				goodButton.addEventListener("click", () => {
-					if(achievementRow.lastElementChild.classList.contains("sat_good_row")) {
-						achievementRow.lastElementChild.classList.remove("sat_good_row");
-						goodIcon.classList.remove("sat_good_icon_clicked");
-						removeAchievementsData(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText);
-					}
-					else {
-						achievementRow.lastElementChild.classList.remove("sat_bad_row");
-						achievementRow.lastElementChild.classList.add("sat_good_row");
-						goodIcon.classList.add("sat_good_icon_clicked");
-						badIcon.classList.remove("sat_bad_icon_clicked");
-						addAchievementsData(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText, { description: achievementRow.lastElementChild.firstElementChild.lastElementChild.innerText, imageUrl: achievementRow.firstElementChild.firstElementChild.src, vote: 1 });
-					}
+					if(achievementRow.lastElementChild.classList.contains("sat_good_row")) removeAchievementVote(achievementRow);
+					else upVoteAchievement(achievementRow);
 					sortAchievements();
 				});
 				goodButtonArea.appendChild(goodButton);
@@ -114,18 +131,8 @@ if(myNameElement) {
 					badBallon.classList.remove("sat_ballon_show");
 				});
 				badButton.addEventListener("click", () => {
-					if(achievementRow.lastElementChild.classList.contains("sat_bad_row")) {
-						achievementRow.lastElementChild.classList.remove("sat_bad_row");
-						badIcon.classList.remove("sat_bad_icon_clicked");
-						removeAchievementsData(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText);
-					}
-					else {
-						achievementRow.lastElementChild.classList.remove("sat_good_row");
-						achievementRow.lastElementChild.classList.add("sat_bad_row");
-						goodIcon.classList.remove("sat_good_icon_clicked");
-						badIcon.classList.add("sat_bad_icon_clicked");
-						addAchievementsData(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText, { description: achievementRow.lastElementChild.firstElementChild.lastElementChild.innerText, imageUrl: achievementRow.firstElementChild.firstElementChild.src, vote: -1 });
-					}
+					if(achievementRow.lastElementChild.classList.contains("sat_bad_row")) removeAchievementVote(achievementRow);
+					else downVoteAchievement(achievementRow);
 					sortAchievements();
 				});
 				badButtonArea.appendChild(badButton);
