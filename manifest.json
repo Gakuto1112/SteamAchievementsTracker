@@ -4,6 +4,9 @@
 	"version": "1.0",
 	"description": "Steamで取得できそうな実績をマークし、後で確認できるようにします。",
   "permissions": ["storage"],
+  "action": {
+    "default_popup": "Popup.html"
+  },
 	"content_scripts": [
 		{
 			"js": ["SteamAchievementsTracker.js"],

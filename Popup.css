@@ -1,0 +1,15 @@
+* {
+	color: #ebebeb;
+}
+body {
+	width: 300px;
+	background-color: #1b2838;
+}
+h1 {
+	margin: 0px;
+	text-align: center;
+	background-color: #171a21;
+}
+.link {
+	text-decoration: underline;
+}

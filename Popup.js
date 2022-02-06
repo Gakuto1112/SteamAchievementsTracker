@@ -1,0 +1,1 @@
+document.getElementById("steam_link").addEventListener("click", () => chrome.tabs.create({ url: "https://store.steampowered.com/" }));
