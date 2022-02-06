@@ -24,6 +24,19 @@ if(myNameElement) {
 					goodIcon.classList.remove("sat_good_icon_hover");
 					goodBallon.classList.remove("sat_ballon_show");
 				});
+				goodButton.addEventListener("click", () => {
+					const achievementRow = goodButton.parentElement.parentElement.parentElement;
+					if(achievementRow.classList.contains("sat_good_row")) {
+						achievementRow.classList.remove("sat_good_row");
+						goodIcon.classList.remove("sat_good_icon_clicked");
+					}
+					else {
+						achievementRow.classList.remove("sat_bad_row");
+						achievementRow.classList.add("sat_good_row");
+						goodIcon.classList.add("sat_good_icon_clicked");
+						badIcon.classList.remove("sat_bad_icon_clicked");
+					}
+				});
 				goodButtonArea.appendChild(goodButton);
 				goodButtonArea.appendChild(goodBallon);
 				buttonsDiv.appendChild(goodButtonArea);
@@ -43,6 +56,19 @@ if(myNameElement) {
 				badButton.addEventListener("mouseout", () => {
 					badIcon.classList.remove("sat_bad_icon_hover");
 					badBallon.classList.remove("sat_ballon_show");
+				});
+				badButton.addEventListener("click", () => {
+					const achievementRow = goodButton.parentElement.parentElement.parentElement;
+					if(achievementRow.classList.contains("sat_bad_row")) {
+						achievementRow.classList.remove("sat_bad_row");
+						badIcon.classList.remove("sat_bad_icon_clicked");
+					}
+					else {
+						achievementRow.classList.remove("sat_good_row");
+						achievementRow.classList.add("sat_bad_row");
+						goodIcon.classList.remove("sat_good_icon_clicked");
+						badIcon.classList.add("sat_bad_icon_clicked");
+					}
 				});
 				badButtonArea.appendChild(badButton);
 				badButtonArea.appendChild(badBallon);

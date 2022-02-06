@@ -30,11 +30,17 @@
 .sat_good_icon_hover {
 	background-position: -112px 0px;
 }
+.sat_good_icon_clicked {
+	background-position: -96px 0px;
+}
 .sat_bad_icon {
 	background-position: -32px 0px;
 }
 .sat_bad_icon_hover {
 	background-position: -48px 0px;
+}
+.sat_bad_icon_clicked {
+	background-position: -64px 0px;
 }
 .sat_ballon {
 	position: absolute;
@@ -60,4 +66,10 @@
 }
 .sat_ballon_show {
 	opacity: 1;
+}
+.sat_good_row {
+	background: linear-gradient(to right, #00000080 75%, #6bb64d) !important;
+}
+.sat_bad_row {
+	background: linear-gradient(to right, #00000080 75%, #aa4c4c) !important;
 }
