@@ -3,10 +3,12 @@
 }
 body {
 	width: 300px;
+	margin: 0px;
 	background-color: #1b2838;
 }
 h1 {
 	margin: 0px;
+	padding: 10px 0px 10px 0px;
 	text-align: center;
 	background-color: #171a21;
 }

@@ -67,15 +67,20 @@ if(myNameElement) {
 			
 			function addAchievementsData(achievementName, data) {
 				//指定した実績情報を登録
-				if(!achievementsTrackData[getAppId()]) achievementsTrackData[getAppId()] = {};
-				achievementsTrackData[getAppId()][achievementName] = data;
+				if(!achievementsTrackData[getAppId()]) {
+					achievementsTrackData[getAppId()] = {};
+					achievementsTrackData[getAppId()]["name"] = document.getElementsByClassName("profile_small_header_location").item(1).innerText.split(" ").slice(0, -1).join(" ");
+					achievementsTrackData[getAppId()]["imageUrl"] = document.querySelectorAll(".gameLogo > a > img").item(0).src;
+					achievementsTrackData[getAppId()]["achievements"] = {};
+				}
+				achievementsTrackData[getAppId()]["achievements"][achievementName] = data;
 				chrome.storage.local.set(achievementsTrackData);
 			}
 		
 			function removeAchievementsData(achievementName) {
 				//指定した実績情報を削除
-				delete achievementsTrackData[getAppId()][achievementName];
-				if(Object.keys(achievementsTrackData[getAppId()]).length == 0) {
+				delete achievementsTrackData[getAppId()]["achievements"][achievementName];
+				if(Object.keys(achievementsTrackData[getAppId()]["achievements"]).length == 0) {
 					delete achievementsTrackData[getAppId()];
 					chrome.storage.local.remove(getAppId());
 				}
