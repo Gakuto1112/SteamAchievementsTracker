@@ -6,7 +6,8 @@
 	"content_scripts": [
 		{
 			"js": ["SteamAchievementsTracker.js"],
-			"matches": ["https://steamcommunity.com/profiles/*/stats/*/", "https://steamcommunity.com/profiles/*/stats/*/achievements/"]
+      "css": ["SteamAchievementsTracker.css"],
+			"matches": ["https://steamcommunity.com/profiles/*/stats/*/", "https://steamcommunity.com/profiles/*/stats/*/?tab=achievements", "https://steamcommunity.com/profiles/*/stats/*/achievements/"]
 		}
 	]
 }

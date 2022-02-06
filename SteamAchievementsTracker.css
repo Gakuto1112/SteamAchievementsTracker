@@ -1,0 +1,37 @@
+.achieveTxtHolder {
+	justify-content: space-between;
+}
+.sat_buttons {
+	display: flex;
+	margin-right: 4px;
+}
+.sat_button {
+	width: 16px;
+	height: 16px;
+	margin: 4px;
+	padding: 4px;
+	overflow: hidden;
+	background-color: #233b4d;
+	border-radius: 2px;
+}
+.sat_button:hover {
+	background-color: #67c1f5;
+}
+.sat_button_icon {
+	width: 16px;
+	height: 16px;
+	background: url(https://community.akamai.steamstatic.com/public/shared/images/buttons/icons_16.png?v=5);
+	overflow: hidden;
+}
+.sat_good_icon {
+	background-position: -80px 0px;
+}
+.sat_good_icon_hover {
+	background-position: -112px 0px;
+}
+.sat_bad_icon {
+	background-position: -32px 0px;
+}
+.sat_bad_icon_hover {
+	background-position: -48px 0px;
+}
