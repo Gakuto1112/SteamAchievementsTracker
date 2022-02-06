@@ -3,11 +3,17 @@
 	"name": "Steam実績トラッカー",
 	"version": "1.0",
 	"description": "Steamで取得できそうな実績をマークし、後で確認できるようにします。",
+  "permissions": ["storage"],
 	"content_scripts": [
 		{
 			"js": ["SteamAchievementsTracker.js"],
       "css": ["SteamAchievementsTracker.css"],
-			"matches": ["https://steamcommunity.com/profiles/*/stats/*/", "https://steamcommunity.com/profiles/*/stats/*/?tab=achievements", "https://steamcommunity.com/profiles/*/stats/*/achievements/"]
+			"matches": [
+        "https://steamcommunity.com/profiles/*/stats/*/",
+        "https://steamcommunity.com/profiles/*/stats/*/?tab=achievements",
+        "https://steamcommunity.com/profiles/*/stats/*/achievements/",
+        "https://steamcommunity.com/profiles/*/stats/appid/*/achievements"
+      ]
 		}
 	]
 }
