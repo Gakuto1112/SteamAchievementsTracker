@@ -1,17 +1,68 @@
 * {
 	color: #ebebeb;
+	margin: 0px;
 }
 body {
-	width: 300px;
-	margin: 0px;
+	width: 600px;
 	background-color: #1b2838;
 }
 h1 {
-	margin: 0px;
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	background-color: #171a21;
 }
+h2 {
+	margin-left: 10px;
+}
+#message {
+	margin-bottom: 20px;
+}
+#achievements_column {
+	margin: 20px;
+}
 .link {
 	text-decoration: underline;
+}
+.game_block {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+}
+.game_title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #2f343f;
+	box-shadow: 10px 5px 5px black;
+}
+.game_image {
+	width: 100px;
+}
+.achievements_list {
+	display: flex;
+	flex-direction: column;
+	margin: 0px 5px 0px 5px;
+	background-color: #111923;
+}
+.achievement_row {
+	display: flex;
+	margin: 4px 5px 4px 5px;
+}
+.achievement_image {
+	width: 50px;
+}
+.achievement_text_holder {
+	display: flex;
+	width: -webkit-fill-available;
+	margin-left: 5px;
+	background-color: #080c11;
+}
+.achievement_text {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin-left: 6px;
+}
+.achievement_description {
+	color: #898989;
 }

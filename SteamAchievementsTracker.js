@@ -146,8 +146,8 @@ if(myNameElement) {
 					buttonsDiv.appendChild(badButtonArea);
 					achievementRow.lastElementChild.appendChild(buttonsDiv);
 					if(achievementsTrackData[getAppId()]) {
-						if(achievementsTrackData[getAppId()][achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText]) {
-							switch(achievementsTrackData[getAppId()][achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText]["vote"]) {
+						if(achievementsTrackData[getAppId()]["achievements"][achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText]) {
+							switch(achievementsTrackData[getAppId()]["achievements"][achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText]["vote"]) {
 								case 1:
 									upVoteAchievement(achievementRow);
 									break;
