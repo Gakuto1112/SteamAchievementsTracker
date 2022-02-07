@@ -1,0 +1,17 @@
+#used_bar {
+	width: 100%;
+}
+.bold {
+	font-weight: bold;
+}
+.button {
+	display: inline;
+	padding: 8px 16px 8px 16px;
+	color: white;
+	background-color: #1a73e8;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.button:hover {
+	background-color: #174ea6;
+}

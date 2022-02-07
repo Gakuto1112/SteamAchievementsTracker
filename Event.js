@@ -6,6 +6,5 @@ chrome.runtime.onInstalled.addListener(() => {
 			userData["settings"]["mode"] = "sync";
 			chrome.storage.sync.set(userData);
 		}
-		console.log(userData);
 	});
 });
