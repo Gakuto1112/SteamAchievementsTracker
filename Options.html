@@ -6,19 +6,10 @@
 		<link rel="stylesheet" href="Options.css">
 	</head>
 	<body>
-		<h2>設定値の保存先</h2>
-		<input type="radio" id="save_location_sync" name="save_location" value="同期">
-		<label id="save_location_sync_label" for="save_location_sync">同期</label>
-		<p>実績情報はログインしているアカウントに紐づけられ、複数のデバイス間で同期されます。非同期より保存できる容量が小さくなります。</p>
-		<input type="radio" id="save_location_local" name="save_location" value="非同期">
-		<label id="save_location_local_label" for="save_location_local">非同期</label>
-		<p>実績情報はこのデバイス上のみに保存されます。ただし、この設定はアカウントに紐づけられます。同期より保存できる容量が大きくなります。</p>
-		<h3>使用中の容量</h3>
-		<p id="used_text"><span id="used_byte">--</span>バイト / <span id="all_byte">--</span>バイト</p>
-		<progress id="used_bar"></progress>
 		<h2>実績情報のインポート・エクスポート</h2>
-		<div id="import" class="button">インポート</div>
+		<div id="import" class="button" accept=".json">インポート</div>
 		<div id="export" class="button">エクスポート</div>
+		<div id="message"></div>
 		<h2>実績情報のリセット</h2>
 		<div id="reset" class="button">リセット</div>
 	</body>

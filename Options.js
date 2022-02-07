@@ -1,65 +1,38 @@
-const syncRadioButton = document.getElementById("save_location_sync");
-const localRadioButton = document.getElementById("save_location_local");
-
-function modeRadioButton() {
-	//保存モード選択のラジオボタンを変更した時
-	const syncLabel = document.getElementById("save_location_sync_label");
-	const localLabel = document.getElementById("save_location_local_label");
-	const usedByte = document.getElementById("used_byte");
-	const allByte = document.getElementById("all_byte");
-	const progressBar = document.getElementById("used_bar");
-
-	function setByte(used, all) {
-		//バイト数を設定
-		usedByte.innerText = used.toLocaleString();
-		allByte.innerText = all.toLocaleString();
-		progressBar.setAttribute("max", all);
-		progressBar.setAttribute("value", used);
-	}
-
-	function setMode(mode) {
-		chrome.storage.sync.get("settings").then((data) => {
-			const userData = data;
-			switch(mode) {
-				case "sync":
-					userData["settings"]["mode"] = "sync";
-					break;
-				case "local":
-					userData["settings"]["mode"] = "local";
-					break;
-			}
-			chrome.storage.sync.set(userData);
-		});
-	}
-
-	usedByte.innerText = "---";
-	allByte.innerText = "---";
-	progressBar.removeAttribute("max");
-	progressBar.removeAttribute("value");
-	if(syncRadioButton.checked) {
-		syncLabel.classList.add("bold");
-		localLabel.classList.remove("bold");
-		setMode("sync");
-		chrome.storage.sync.getBytesInUse().then((bytesInUse) => setByte(bytesInUse, chrome.storage.sync.QUOTA_BYTES));
-	}
-	else {
-		syncLabel.classList.remove("bold");
-		localLabel.classList.add("bold");
-		setMode("local");
-		chrome.storage.local.getBytesInUse().then((bytesInUse) => setByte(bytesInUse, chrome.storage.local.QUOTA_BYTES));
-	}
-}
-
-syncRadioButton.addEventListener("change", () => modeRadioButton());
-localRadioButton.addEventListener("change", () => modeRadioButton());
-chrome.storage.sync.get("settings").then((data) => {
-	switch(data["settings"]["mode"]) {
-		case "sync":
-			syncRadioButton.checked = true;
-			break;
-		case "local":
-			localRadioButton.checked = true;
-			break;
-	}
-	modeRadioButton();
+document.getElementById("import").addEventListener("click", () => {
+	const fileInput = document.createElement("INPUT");
+	fileInput.type = "file";
+	fileInput.addEventListener("change", () => {
+		const message = document.getElementById("message");
+		if(fileInput.value.split(".")[1] == "json") {
+			message.classList.remove("message_ok");
+			message.classList.remove("message_error");
+			message.innerHTML = "データをインポートしています...";
+			const reader = new FileReader();
+			reader.addEventListener("load", () => {
+				let newData;
+				try {
+					newData = JSON.parse(reader.result());
+				}
+				catch {
+					message.classList.remove("message_ok");
+					message.classList.add("message_error");
+					message.innerHTML = "ファイルの読み込みに失敗しました。ファイルの形式が正しくない場合があります。";
+				}
+				chrome.storage.sync.get(null).then((data) => {
+					const achievementData = data;
+					achievementData["achievements"] = newData;
+					message.classList.add("message_ok");
+					message.classList.remove("message_error");
+					message.innerHTML = "データをインポートしました。";		
+				});
+			});
+			reader.readAsText(fileInput.files[0]);
+		}
+		else {
+			message.classList.remove("message_ok");
+			message.classList.add("message_error");
+			message.innerHTML = "このファイルは正しくありません。";
+		}
+	});
+	fileInput.click();
 });

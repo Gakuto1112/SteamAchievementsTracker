@@ -1,8 +1,5 @@
-#used_bar {
-	width: 100%;
-}
-.bold {
-	font-weight: bold;
+body {
+	margin-bottom: 15px;
 }
 .button {
 	display: inline;
@@ -11,7 +8,26 @@
 	background-color: #1a73e8;
 	border-radius: 4px;
 	cursor: pointer;
+	user-select: none;
 }
 .button:hover {
 	background-color: #174ea6;
+}
+#message {
+	display: none;
+	margin-top: 15px;
+	padding: 10px;
+	background-color: #eeeeee;
+	border: solid 1px #cccccc;
+	border-radius: 4px;
+}
+.message_ok {
+	display: block !important;
+	background-color: #ddffdd !important;
+	border-color: #88ff88 !important;
+}
+.message_error {
+	display: block !important;
+	background-color: #ffdddd !important;
+	border-color: #ff8888 !important;
 }

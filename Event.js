@@ -4,6 +4,7 @@ chrome.runtime.onInstalled.addListener(() => {
 		if(Object.keys(data).length == 0) {
 			userData["settings"] = {};
 			userData["settings"]["mode"] = "sync";
+			userData["achievements"] = {};
 			chrome.storage.sync.set(userData);
 		}
 	});
