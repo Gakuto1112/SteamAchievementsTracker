@@ -6,6 +6,9 @@
 	"permissions": [
 		"storage"
 	],
+	"background": {
+		"service_worker": "Event.js"
+	},
 	"action": {
     	"default_popup": "Popup.html"
 	},
