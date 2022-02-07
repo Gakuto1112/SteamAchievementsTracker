@@ -76,7 +76,14 @@ if(myNameElement) {
 					achievementsTrackData[getAppId()]["achievements"] = {};
 				}
 				achievementsTrackData[getAppId()]["achievements"][achievementName] = data;
-				chrome.storage.sync.set(achievementsTrackData);
+				try {
+					chrome.storage.sync.set(achievementsTrackData);
+				}
+				catch(error) {
+					if(error.message == "Extension context invalidated.") {
+						alert("【SteamAchievementsTracker】拡張機能の更新されました。ページを再読み込みして下さい。なお、今回の変更は保存できません。");
+					}
+				}
 			}
 		
 			function removeAchievementsData(achievementName) {
@@ -84,9 +91,24 @@ if(myNameElement) {
 				delete achievementsTrackData[getAppId()]["achievements"][achievementName];
 				if(Object.keys(achievementsTrackData[getAppId()]["achievements"]).length == 0) {
 					delete achievementsTrackData[getAppId()];
-					chrome.storage.sync.remove(getAppId());
+					try {
+						chrome.storage.sync.remove(getAppId());
+					}
+					catch(error) {
+						if(error.message == "Extension context invalidated.") {
+							alert("【SteamAchievementsTracker】拡張機能の更新されました。ページを再読み込みして下さい。なお、今回の変更は保存できません。");
+							return;
+						}
+					}
 				}
-				chrome.storage.sync.set(achievementsTrackData);
+				try{
+					chrome.storage.sync.set(achievementsTrackData);
+				}
+				catch(error) {
+					if(error.message == "Extension context invalidated.") {
+						alert("【SteamAchievementsTracker】拡張機能の更新されました。ページを再読み込みして下さい。なお、今回の変更は保存できません。");
+					}
+				}
 			}		
 
 			Array.from(document.getElementById("personalAchieve").children).forEach((achievementRow) => {
