@@ -13,13 +13,15 @@ document.getElementById("import").addEventListener("click", () => {
 					chrome.storage.sync.set(JSON.parse(reader.result)).then(() => {
 						message.classList.add("message_ok");
 						message.classList.remove("message_error");
-						message.innerHTML = "データをインポートしました。";		
-					});	
+						message.innerHTML = "データをインポートしました。";
+						setTimeout(() => message.classList.remove("message_ok"), 3000);
+					});
 				}
 				catch {
 					message.classList.remove("message_ok");
 					message.classList.add("message_error");
 					message.innerHTML = "ファイルの読み込みに失敗しました。ファイルの形式が正しくない場合があります。";
+					setTimeout(() => message.classList.remove("message_error"), 3000);
 				}
 			});
 			reader.readAsText(fileInput.files[0]);
@@ -28,6 +30,7 @@ document.getElementById("import").addEventListener("click", () => {
 			message.classList.remove("message_ok");
 			message.classList.add("message_error");
 			message.innerHTML = "このファイルは正しくありません。";
+			setTimeout(() => message.classList.remove("message_error"), 3000);
 		}
 	});
 	fileInput.click();
