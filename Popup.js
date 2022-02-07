@@ -6,7 +6,6 @@ function steamLink() {
 steamLink();
 chrome.storage.local.get(null, (data) => {
 	const achievementsTrackData = data;
-	let achievementFound = false;
 	let messageInit = true;
 	for(let appId in achievementsTrackData) {
 		for(let achievementName in achievementsTrackData[appId]["achievements"]) {
@@ -130,10 +129,8 @@ chrome.storage.local.get(null, (data) => {
 					}
 				});
 				achievementsColumn.appendChild(gameBlock);
-				achievementFound = true;
 				break;			
 			}
 		}
-		if(achievementFound) break;
 	}
 });
