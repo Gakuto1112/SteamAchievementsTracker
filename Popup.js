@@ -6,13 +6,21 @@ function steamLink() {
 steamLink();
 chrome.storage.local.get(null, (data) => {
 	const achievementsTrackData = data;
+	const appNameSortArray = [];
+	const appIdSortArray = [];
 	let messageInit = true;
-	for(let appId in achievementsTrackData) {
+	Object.keys(achievementsTrackData).forEach((appId) => appNameSortArray.push(achievementsTrackData[appId]["name"]));
+	appNameSortArray.sort();
+	appNameSortArray.forEach((appName) => {
+		for(let appId in achievementsTrackData) {
+			if(achievementsTrackData[appId]["name"] == appName) appIdSortArray.push(appId);
+		}
+	});
+	appIdSortArray.forEach((appId) => {
 		for(let achievementName in achievementsTrackData[appId]["achievements"]) {
 			if(achievementsTrackData[appId]["achievements"][achievementName]["vote"] == 1) {
 				const message = document.getElementById("message");
 				const achievementsColumn = document.getElementById("achievements_column");
-
 				if(messageInit) {
 					message.innerText = "現在追跡中の実績は以下の通りです。これらの実績の取得に向けて頑張ってプレイしましょう！追跡中の実績を獲得した場合、そのゲームの実績ページにアクセスすると、追跡リストから削除されます。";
 					messageInit = false;
@@ -132,5 +140,5 @@ chrome.storage.local.get(null, (data) => {
 				break;			
 			}
 		}
-	}
+	});
 });
