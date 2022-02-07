@@ -1,9 +1,10 @@
-body {
-	margin-bottom: 15px;
+p {
+	margin: 0px 0px 4px 0px;
 }
 .button {
-	display: inline;
+	display: inline-block;
 	padding: 8px 16px 8px 16px;
+	line-height: 18px;
 	color: white;
 	background-color: #1a73e8;
 	border-radius: 4px;
@@ -13,7 +14,7 @@ body {
 .button:hover {
 	background-color: #174ea6;
 }
-#message {
+.message {
 	display: none;
 	margin-top: 15px;
 	padding: 10px;
@@ -22,12 +23,12 @@ body {
 	border-radius: 4px;
 }
 .message_ok {
-	display: block !important;
-	background-color: #ddffdd !important;
-	border-color: #88ff88 !important;
+	display: block;
+	background-color: #ddffdd;
+	border-color: #88ff88;
 }
 .message_error {
-	display: block !important;
-	background-color: #ffdddd !important;
-	border-color: #ff8888 !important;
+	display: block;
+	background-color: #ffdddd;
+	border-color: #ff8888;
 }

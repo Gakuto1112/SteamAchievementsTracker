@@ -9,8 +9,14 @@
 		<h2>実績情報のインポート・エクスポート</h2>
 		<div id="import" class="button" accept=".json">インポート</div>
 		<div id="export" class="button">エクスポート</div>
-		<div id="message"></div>
+		<div id="message" class="message"></div>
 		<h2>実績情報のリセット</h2>
-		<div id="reset" class="button">リセット</div>
+		<div id="clear" class="button">リセット</div>
+		<div id="clear_message" class="message">
+			<p>実績データを全て削除しますか？この操作は元に戻せません。</p>
+			<div id="clear_confirm" class="button">OK</div>
+			<div id="clear_cancel" class="button">キャンセル</div>
+		</div>
+		<div id="clear_done_message" class="message">実績データを削除しました。</div>
 	</body>
 </html>

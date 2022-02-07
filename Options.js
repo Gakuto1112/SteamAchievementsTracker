@@ -42,3 +42,18 @@ document.getElementById("export").addEventListener("click", () => {
 		exportElement.click();
 	});
 });
+
+document.getElementById("clear").addEventListener("click", () => {
+	const clearMessage = document.getElementById("clear_message");
+	const clearDoneMessage = document.getElementById("clear_done_message");
+	clearDoneMessage.classList.remove("message_ok");
+	clearMessage.classList.add("message_error");
+	document.getElementById("clear_confirm").addEventListener("click", () => {
+		chrome.storage.sync.clear().then(() => {
+			clearMessage.classList.remove("message_error");
+			clearDoneMessage.classList.add("message_ok");
+			setTimeout(() => clearDoneMessage.classList.remove("message_ok"), 3000);
+		});
+	});
+	document.getElementById("clear_cancel").addEventListener("click", () => clearMessage.classList.remove("message_error"));
+});
