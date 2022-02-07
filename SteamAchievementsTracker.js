@@ -12,7 +12,7 @@ if(myNameElement) {
 				achievementRowElement.lastElementChild.classList.add("sat_good_row");
 				achievementRowElement.lastElementChild.lastElementChild.firstElementChild.firstElementChild.firstElementChild.classList.add("sat_good_icon_clicked");
 				achievementRowElement.lastElementChild.lastElementChild.lastElementChild.firstElementChild.firstElementChild.classList.remove("sat_bad_icon_clicked");
-				addAchievementsData(achievementRowElement.lastElementChild.firstElementChild.firstElementChild.innerText, { description: achievementRowElement.lastElementChild.firstElementChild.lastElementChild.innerText, imageUrl: achievementRowElement.firstElementChild.firstElementChild.src, vote: 1 });
+				addAchievementsData(achievementRowElement.lastElementChild.firstElementChild.firstElementChild.innerText, { description: achievementRowElement.lastElementChild.firstElementChild.children.item(1).innerText, imageUrl: achievementRowElement.firstElementChild.firstElementChild.src, vote: 1 });
 			}
 		
 			function downVoteAchievement(achievementRowElement) {
@@ -21,7 +21,7 @@ if(myNameElement) {
 				achievementRowElement.lastElementChild.classList.add("sat_bad_row");
 				achievementRowElement.lastElementChild.lastElementChild.firstElementChild.firstElementChild.firstElementChild.classList.remove("sat_good_icon_clicked");
 				achievementRowElement.lastElementChild.lastElementChild.lastElementChild.firstElementChild.firstElementChild.classList.add("sat_bad_icon_clicked");
-				addAchievementsData(achievementRowElement.lastElementChild.firstElementChild.firstElementChild.innerText, { description: achievementRowElement.lastElementChild.firstElementChild.lastElementChild.innerText, imageUrl: achievementRowElement.firstElementChild.firstElementChild.src, vote: -1 });
+				addAchievementsData(achievementRowElement.lastElementChild.firstElementChild.firstElementChild.innerText, { description: achievementRowElement.lastElementChild.firstElementChild.children.item(1).innerText, imageUrl: achievementRowElement.firstElementChild.firstElementChild.src, vote: -1 });
 			}
 		
 			function removeAchievementVote(achievementRowElement) {
