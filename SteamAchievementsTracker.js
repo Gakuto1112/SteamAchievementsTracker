@@ -95,7 +95,7 @@ if(myNameElement) {
 						if(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText == achievementName) removeAchievementsData(achievementName)
 					}
 				}
-				else if(achievementRow.tagName == "DIV" && achievementRow.firstElementChild.classList.contains("achieveImgHolder")) {
+				else if(achievementRow.tagName == "DIV" && !achievementRow.hasAttribute("data-panel") && achievementRow.firstElementChild.classList.contains("achieveImgHolder")) {
 					//順序リストに追加
 					achievementsOrderedList.push(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText);
 					//ボタンの生成
