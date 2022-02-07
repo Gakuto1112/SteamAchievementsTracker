@@ -6,17 +6,13 @@ body {
 	width: 600px;
 	background-color: #1b2838;
 }
+body::-webkit-scrollbar {
+	display: none;
+}
 h1 {
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	background-color: #171a21;
-}
-h2 {
-	margin-left: 10px;
-	cursor: pointer;
-}
-h2:hover {
-	color: #67c1f5;
 }
 #message {
 	margin-bottom: 20px;
@@ -39,15 +35,37 @@ h2:hover {
 	justify-content: space-between;
 	background-color: #2f343f;
 	box-shadow: 10px 5px 5px black;
+	cursor: pointer;
+}
+.game_title_and_arrow {
+	display: flex;
+	margin-left: 10px;
+	cursor: pointer;
+}
+.drawer_arrow {
+	user-select: none;
+}
+.drawer_arrow_hover {
+	color: #67c1f5;
+}
+.game_title_text {
+	margin-left: 10px;
+	cursor: pointer;
 }
 .game_image {
 	width: 100px;
+	cursor: pointer;
 }
 .achievements_list {
-	display: flex;
+	display: none;
 	flex-direction: column;
 	margin: 0px 5px 0px 5px;
 	background-color: #111923;
+	overflow: hidden;
+	transition: 0.3s;
+}
+.achievements_list_open {
+	display: flex;
 }
 .achievement_row {
 	display: flex;
@@ -72,6 +90,7 @@ h2:hover {
 }
 .achievement_description {
 	color: #898989;
+	-webkit-line-clamp: 2;
 }
 .buttons {
 	display: flex;

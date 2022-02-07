@@ -29,17 +29,37 @@ chrome.storage.local.get(null, (data) => {
 				gameBlock.classList.add("game_block");
 				const gameTitle = document.createElement("DIV");
 				gameTitle.classList.add("game_title");
+				const gameTitleAndArrow = document.createElement("DIV");
+				gameTitleAndArrow.classList.add("game_title_and_arrow");
+				const drawerArrow = document.createElement("H2");
+				drawerArrow.classList.add("drawer_arrow");
+				drawerArrow.innerText = "▼";
+				gameTitle.addEventListener("mouseover", () => drawerArrow.classList.add("drawer_arrow_hover"));
+				gameTitle.addEventListener("mouseleave", () => drawerArrow.classList.remove("drawer_arrow_hover"))
+				gameTitleAndArrow.appendChild(drawerArrow);
 				const gameTitleText = document.createElement("H2");
+				gameTitleText.classList.add("game_title_text");
 				gameTitleText.innerText = achievementsTrackData[appId]["name"];
-				gameTitleText.addEventListener("click", () => chrome.tabs.create({ url: achievementsTrackData[appId]["pageUrl"] }));
-				gameTitle.appendChild(gameTitleText);
+				gameTitleAndArrow.appendChild(gameTitleText);
+				gameTitle.appendChild(gameTitleAndArrow);
 				const gameImage = document.createElement("IMG");
 				gameImage.classList.add("game_image");
 				gameImage.src = achievementsTrackData[appId]["imageUrl"];
+				gameImage.addEventListener("click", () => chrome.tabs.create({ url: achievementsTrackData[appId]["pageUrl"] }));
 				gameTitle.appendChild(gameImage);
 				gameBlock.appendChild(gameTitle);
 				const achievementsList = document.createElement("DIV");
 				achievementsList.classList.add("achievements_list");
+				gameTitle.addEventListener("click", () => {
+					if(achievementsList.classList.contains("achievements_list_open")) {
+						achievementsList.classList.remove("achievements_list_open");
+						drawerArrow.innerText = "▼";
+					}
+					else {
+						achievementsList.classList.add("achievements_list_open");
+						drawerArrow.innerText = "▲";
+					}
+				});
 				Object.keys(achievementsTrackData[appId]["achievements"]).forEach((achievementName) => {
 					if(achievementsTrackData[appId]["achievements"][achievementName]["vote"] == 1) {
 						const achievementRow = document.createElement("DIV");
@@ -130,12 +150,11 @@ chrome.storage.local.get(null, (data) => {
 						badButtonArea.appendChild(badButton);
 						buttonsDiv.appendChild(badButtonArea);
 						achievementTextHolder.appendChild(buttonsDiv);
-	
 						achievementRow.appendChild(achievementTextHolder);
 						achievementsList.appendChild(achievementRow);
-						gameBlock.appendChild(achievementsList);
 					}
 				});
+				gameBlock.appendChild(achievementsList);
 				achievementsColumn.appendChild(gameBlock);
 				break;			
 			}
