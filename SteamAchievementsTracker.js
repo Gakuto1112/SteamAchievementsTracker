@@ -6,6 +6,7 @@ if(myNameElement) {
 	if(personaNameTextClassElements.item(personaNameTextClassElements.length - 1).innerText.slice(0, -1) == myNameElement.innerText) {
 		chrome.storage.local.get(null, (data) => {
 			const achievementsTrackData = data;
+
 			function upVoteAchievement(achievementRowElement) {
 				//実績をgoodする
 				achievementRowElement.lastElementChild.classList.remove("sat_bad_row");
@@ -89,7 +90,12 @@ if(myNameElement) {
 			}		
 
 			Array.from(document.getElementById("personalAchieve").children).forEach((achievementRow) => {
-				if(achievementRow.tagName == "DIV" && !achievementRow.hasAttribute("data-panel") && achievementRow.firstElementChild.classList.contains("achieveImgHolder")) {
+				if(achievementRow.hasAttribute("data-panel") && achievementsTrackData[getAppId()]) {
+					for(let achievementName in achievementsTrackData[getAppId()]["achievements"]) {
+						if(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText == achievementName) removeAchievementsData(achievementName)
+					}
+				}
+				else if(achievementRow.tagName == "DIV" && achievementRow.firstElementChild.classList.contains("achieveImgHolder")) {
 					//順序リストに追加
 					achievementsOrderedList.push(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText);
 					//ボタンの生成
