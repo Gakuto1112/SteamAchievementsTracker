@@ -4,7 +4,7 @@ const achievementsOrderedList = [];
 if(myNameElement) {
 	const personaNameTextClassElements = document.getElementsByClassName("persona_name_text_content");
 	if(personaNameTextClassElements.item(personaNameTextClassElements.length - 1).innerText.slice(0, -1) == myNameElement.innerText) {
-		chrome.storage.local.get(null, (data) => {
+		chrome.storage.sync.get(null, (data) => {
 			const achievementsTrackData = data;
 
 			function upVoteAchievement(achievementRowElement) {
@@ -76,7 +76,7 @@ if(myNameElement) {
 					achievementsTrackData[getAppId()]["achievements"] = {};
 				}
 				achievementsTrackData[getAppId()]["achievements"][achievementName] = data;
-				chrome.storage.local.set(achievementsTrackData);
+				chrome.storage.sync.set(achievementsTrackData);
 			}
 		
 			function removeAchievementsData(achievementName) {
@@ -84,9 +84,9 @@ if(myNameElement) {
 				delete achievementsTrackData[getAppId()]["achievements"][achievementName];
 				if(Object.keys(achievementsTrackData[getAppId()]["achievements"]).length == 0) {
 					delete achievementsTrackData[getAppId()];
-					chrome.storage.local.remove(getAppId());
+					chrome.storage.sync.remove(getAppId());
 				}
-				chrome.storage.local.set(achievementsTrackData);
+				chrome.storage.sync.set(achievementsTrackData);
 			}		
 
 			Array.from(document.getElementById("personalAchieve").children).forEach((achievementRow) => {

@@ -4,7 +4,7 @@ function steamLink() {
 }
 
 steamLink();
-chrome.storage.local.get(null, (data) => {
+chrome.storage.sync.get(null, (data) => {
 	const achievementsTrackData = data;
 	const appNameSortArray = [];
 	const appIdSortArray = [];
@@ -104,7 +104,7 @@ chrome.storage.local.get(null, (data) => {
 								if(!upVotedAchievementFound) {
 									if(Object.keys(achievementsTrackData[appId]["achievements"]).length == 1) {
 										delete achievementsTrackData[appId];
-										chrome.storage.local.remove(appId);	
+										chrome.storage.sync.remove(appId);	
 									}
 									gameBlock.remove();
 									if(achievementsColumn.childElementCount == 1) {
@@ -112,7 +112,7 @@ chrome.storage.local.get(null, (data) => {
 										steamLink();
 									}
 								}
-								chrome.storage.local.set(achievementsTrackData);
+								chrome.storage.sync.set(achievementsTrackData);
 							}
 						});
 						goodButtonArea.appendChild(goodButton);
@@ -128,7 +128,7 @@ chrome.storage.local.get(null, (data) => {
 						badButton.addEventListener("click", () => {
 							if(confirm(achievementsTrackData[appId]["name"] + "の実績「" + achievementName + "」の追跡を解除しますか？" )) {
 								achievementsTrackData[appId]["achievements"][achievementName]["vote"] = -1;
-								chrome.storage.local.set(achievementsTrackData);
+								chrome.storage.sync.set(achievementsTrackData);
 								console.log(Object.keys(achievementsTrackData[appId]["achievements"]).length);
 								let upVotedAchievementFound = false;
 								for(let achievementNameInApp in achievementsTrackData[appId]["achievements"]) {
