@@ -12,6 +12,31 @@ document.getElementById("import").addEventListener("click", () => {
 	fileInput.addEventListener("change", () => {
 		const importExportMessage = document.getElementById("import_export_message");
 		const importExportMessageBody = document.createElement("P");
+
+		function okMessage(message) {
+			while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+			importExportMessage.classList.add("message_ok");
+			importExportMessage.classList.remove("message_error");
+			importExportMessageBody.innerText = message;
+			importExportMessage.appendChild(importExportMessageBody);
+			setTimeout(() => {
+				importExportMessage.classList.remove("message_ok");
+				while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+			}, 3000);
+		}
+
+		function errorMessage(message) {
+			while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+			importExportMessage.classList.remove("message_ok");
+			importExportMessage.classList.add("message_error");
+			importExportMessageBody.innerText = message;
+			importExportMessage.appendChild(importExportMessageBody);
+			setTimeout(() => {
+				importExportMessage.classList.remove("message_error");
+				while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+			}, 3000);
+		}
+
 		importExportMessage.appendChild(importExportMessageBody);
 		if(fileInput.value.split(".")[1] == "json") {
 			importExportMessage.classList.remove("message_ok");
@@ -24,13 +49,7 @@ document.getElementById("import").addEventListener("click", () => {
 					readResult = JSON.parse(reader.result);
 				}
 				catch {
-					importExportMessage.classList.remove("message_ok");
-					importExportMessage.classList.add("message_error");
-					importExportMessageBody.innerText = "ファイルの読み込みに失敗しました。ファイルの形式が正しくない場合があります。";
-					setTimeout(() => {
-						importExportMessage.classList.remove("message_error");
-						while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-					}, 3000);
+					errorMessage("ファイルの読み込みに失敗しました。ファイルの形式が正しくない場合があります。");
 				}
 				importExportMessage.classList.add("message_ok");
 				importExportMessage.classList.remove("message_error");
@@ -38,24 +57,7 @@ document.getElementById("import").addEventListener("click", () => {
 				const importReplaceButton = createButtonElement("置き換え");
 				importReplaceButton.style.marginRight = "3px";
 				importReplaceButton.addEventListener("click", () => {
-					while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-					chrome.storage.sync.set(readResult).then(() => {
-						importExportMessageBody.innerText = "データをインポートしました。";
-						importExportMessage.appendChild(importExportMessageBody);
-						setTimeout(() => {
-							importExportMessage.classList.remove("message_ok");
-							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-						}, 3000);
-					}).catch(() => {
-						importExportMessage.classList.remove("message_ok");
-						importExportMessage.classList.add("message_error");
-						importExportMessageBody.innerText = "データの書き込みに失敗しました。";
-						importExportMessage.appendChild(importExportMessageBody);
-						setTimeout(() => {
-							importExportMessage.classList.remove("message_error");
-							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-						}, 3000);
-					});
+					chrome.storage.sync.set(readResult).then(() => okMessage("データをインポートしました。")).catch(() => errorMessage("データの書き込みに失敗しました。"));
 				});
 				importExportMessage.appendChild(importReplaceButton);
 				const importAddReplaceDuplicationButton = createButtonElement("追加（重複は置き換え）");
@@ -70,33 +72,8 @@ document.getElementById("import").addEventListener("click", () => {
 							}
 							else achievementsTrackData[appId] = readResult[appId];
 						}
-						chrome.storage.sync.set(achievementsTrackData).then(() => {
-							importExportMessageBody.innerText = "データをインポートしました。";
-							importExportMessage.appendChild(importExportMessageBody);
-							setTimeout(() => {
-								importExportMessage.classList.remove("message_ok");
-								while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-							}, 3000);
-						}).catch(() => {
-							importExportMessage.classList.remove("message_ok");
-							importExportMessage.classList.add("message_error");
-							importExportMessageBody.innerText = "データの書き込みに失敗しました。";
-							importExportMessage.appendChild(importExportMessageBody);
-							setTimeout(() => {
-								importExportMessage.classList.remove("message_error");
-								while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-							}, 3000);
-						});
-					}).catch(() => {
-						importExportMessage.classList.remove("message_ok");
-						importExportMessage.classList.add("message_error");
-						importExportMessageBody.innerText = "データの読み込みに失敗しました。";
-						importExportMessage.appendChild(importExportMessageBody);
-						setTimeout(() => {
-							importExportMessage.classList.remove("message_error");
-							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-						}, 3000);
-					});
+						chrome.storage.sync.set(achievementsTrackData).then(() => okMessage("データをインポートしました。")).catch(() => errorMessage("データの書き込みに失敗しました。"));
+					}).catch(() => errorMessage("データの読み込みに失敗しました。"));
 				});
 				importExportMessage.appendChild(importAddReplaceDuplicationButton);
 				const importAddButton = createButtonElement("追加");
@@ -112,47 +89,14 @@ document.getElementById("import").addEventListener("click", () => {
 							}
 							else achievementsTrackData[appId] = readResult[appId];
 						}
-						chrome.storage.sync.set(achievementsTrackData).then(() => {
-							importExportMessageBody.innerText = "データをインポートしました。";
-							importExportMessage.appendChild(importExportMessageBody);
-							setTimeout(() => {
-								importExportMessage.classList.remove("message_ok");
-								while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-							}, 3000);
-						}).catch(() => {
-							importExportMessage.classList.remove("message_ok");
-							importExportMessage.classList.add("message_error");
-							importExportMessageBody.innerText = "データの書き込みに失敗しました。";
-							importExportMessage.appendChild(importExportMessageBody);
-							setTimeout(() => {
-								importExportMessage.classList.remove("message_error");
-								while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-							}, 3000);
-						});
-					}).catch(() => {
-						importExportMessage.classList.remove("message_ok");
-						importExportMessage.classList.add("message_error");
-						importExportMessageBody.innerText = "データの読み込みに失敗しました。";
-						importExportMessage.appendChild(importExportMessageBody);
-						setTimeout(() => {
-							importExportMessage.classList.remove("message_error");
-							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-						}, 3000);
-					});
+						chrome.storage.sync.set(achievementsTrackData).then(() => okMessage("データをインポートしました。")).catch(() => errorMessage("データの書き込みに失敗しました。"));
+					}).catch(() => errorMessage("データの読み込みに失敗しました。"));
 				});
 				importExportMessage.appendChild(importAddButton);
 			});
 			reader.readAsText(fileInput.files[0]);
 		}
-		else {
-			importExportMessage.classList.remove("message_ok");
-			importExportMessage.classList.add("message_error");
-			importExportMessageBody.innerText = "このファイルは正しくありません。";
-			setTimeout(() => {
-				importExportMessage.classList.remove("message_error");
-				while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-			}, 3000);
-		}
+		else errorMessage("このファイルは正しくありません。");
 	});
 	fileInput.click();
 });
