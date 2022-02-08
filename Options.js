@@ -42,9 +42,6 @@ importButton.addEventListener("click", () => {
 
 		importExportMessage.appendChild(importExportMessageBody);
 		if(fileInput.value.split(".")[1] == "json") {
-			importExportMessage.classList.remove("message_ok");
-			importExportMessage.classList.remove("message_error");
-			importExportMessageBody.innerText = "データをインポートしています...";
 			const reader = new FileReader();
 			reader.addEventListener("load", () => {
 				let readResult;
@@ -72,7 +69,6 @@ importButton.addEventListener("click", () => {
 				const importAddReplaceDuplicationButton = createButtonElement("追加（重複は置き換え）");
 				importAddReplaceDuplicationButton.style.marginRight = "3px";
 				importAddReplaceDuplicationButton.addEventListener("click", () => {
-					while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
 					chrome.storage.sync.get(null).then((data) => {
 						const achievementsTrackData = data;
 						for(let appId in readResult) {
@@ -87,7 +83,6 @@ importButton.addEventListener("click", () => {
 				importExportMessage.appendChild(importAddReplaceDuplicationButton);
 				const importAddButton = createButtonElement("追加");
 				importAddButton.addEventListener("click", () => {
-					while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
 					chrome.storage.sync.get(null).then((data) => {
 						const achievementsTrackData = data;
 						for(let appId in readResult) {
@@ -102,6 +97,14 @@ importButton.addEventListener("click", () => {
 					}).catch(() => errorMessage("データの読み込みに失敗しました。"));
 				});
 				importExportMessage.appendChild(importAddButton);
+				const importCancelButton = createButtonElement("キャンセル");
+				importCancelButton.style.marginTop = "3px";
+				importCancelButton.addEventListener("click", () => {
+					importButton.classList.remove("button_disabled");
+					importExportMessage.classList.remove("message_ok");
+					while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+				});
+				importExportMessage.appendChild(importCancelButton);
 			});
 			reader.readAsText(fileInput.files[0]);
 		}
