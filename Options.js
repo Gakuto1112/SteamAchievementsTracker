@@ -1,36 +1,48 @@
 document.getElementById("import").addEventListener("click", () => {
 	const fileInput = document.createElement("INPUT");
 	fileInput.type = "file";
+	fileInput.accept = ".json";
 	fileInput.addEventListener("change", () => {
-		const message = document.getElementById("message");
+		const importExportMessage = document.getElementById("import_export_message");
+		const importExportMessageBody = document.createElement("P");
+		importExportMessage.appendChild(importExportMessageBody);
 		if(fileInput.value.split(".")[1] == "json") {
-			message.classList.remove("message_ok");
-			message.classList.remove("message_error");
-			message.innerHTML = "データをインポートしています...";
+			importExportMessage.classList.remove("message_ok");
+			importExportMessage.classList.remove("message_error");
+			importExportMessageBody.innerText = "データをインポートしています...";
 			const reader = new FileReader();
 			reader.addEventListener("load", () => {
 				try {
 					chrome.storage.sync.set(JSON.parse(reader.result)).then(() => {
-						message.classList.add("message_ok");
-						message.classList.remove("message_error");
-						message.innerHTML = "データをインポートしました。";
-						setTimeout(() => message.classList.remove("message_ok"), 3000);
+						importExportMessage.classList.add("message_ok");
+						importExportMessage.classList.remove("message_error");
+						importExportMessageBody.innerText = "データをインポートしました。";
+						setTimeout(() => {
+							importExportMessage.classList.remove("message_ok");
+							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+						}, 3000);
 					});
 				}
 				catch {
-					message.classList.remove("message_ok");
-					message.classList.add("message_error");
-					message.innerHTML = "ファイルの読み込みに失敗しました。ファイルの形式が正しくない場合があります。";
-					setTimeout(() => message.classList.remove("message_error"), 3000);
+					importExportMessage.classList.remove("message_ok");
+					importExportMessage.classList.add("message_error");
+					importExportMessageBody.innerText = "ファイルの読み込みに失敗しました。ファイルの形式が正しくない場合があります。";
+					setTimeout(() => {
+						importExportMessage.classList.remove("message_error");
+						while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+					}, 3000);
 				}
 			});
 			reader.readAsText(fileInput.files[0]);
 		}
 		else {
-			message.classList.remove("message_ok");
-			message.classList.add("message_error");
-			message.innerHTML = "このファイルは正しくありません。";
-			setTimeout(() => message.classList.remove("message_error"), 3000);
+			importExportMessage.classList.remove("message_ok");
+			importExportMessage.classList.add("message_error");
+			importExportMessageBody.innerText = "このファイルは正しくありません。";
+			setTimeout(() => {
+				importExportMessage.classList.remove("message_error");
+				while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+			}, 3000);
 		}
 	});
 	fileInput.click();
@@ -49,20 +61,37 @@ document.getElementById("export").addEventListener("click", () => {
 const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", () => {
 	const clearMessage = document.getElementById("clear_message");
-	const clearDoneMessage = document.getElementById("clear_done_message");
+	const clearMessageBody = document.createElement("P");
+	clearMessage.appendChild(clearMessageBody);
 	clearButton.classList.add("button_disabled");
-	clearDoneMessage.classList.remove("message_ok");
 	clearMessage.classList.add("message_error");
-	document.getElementById("clear_confirm").addEventListener("click", () => {
+	clearMessageBody.innerText = "実績データを全て削除しますか？この操作は元に戻せません。";
+	const clearConfirmButton = document.createElement("DIV");
+	clearConfirmButton.classList.add("button");
+	clearConfirmButton.innerText = "OK";
+	clearConfirmButton.style.marginRight = "3px";
+	clearConfirmButton.addEventListener("click", () => {
 		chrome.storage.sync.clear().then(() => {
 			clearButton.classList.remove("button_disabled");
 			clearMessage.classList.remove("message_error");
-			clearDoneMessage.classList.add("message_ok");
-			setTimeout(() => clearDoneMessage.classList.remove("message_ok"), 3000);
+			while(clearMessage.firstElementChild) clearMessage.removeChild(clearMessage.firstElementChild);
+			clearMessage.classList.add("message_ok");
+			clearMessageBody.innerText = "実績データを削除しました。";
+			clearMessage.appendChild(clearMessageBody);
+			setTimeout(() => {
+				clearMessage.classList.remove("message_ok");
+				while(clearMessage.firstElementChild) clearMessage.removeChild(clearMessage.firstElementChild);
+			}, 3000);
 		});
 	});
-	document.getElementById("clear_cancel").addEventListener("click", () => {
+	clearMessage.appendChild(clearConfirmButton);
+	const clearCancelButton = document.createElement("DIV");
+	clearCancelButton.classList.add("button");
+	clearCancelButton.innerText = "キャンセル";
+	clearCancelButton.addEventListener("click", () => {
 		clearButton.classList.remove("button_disabled");
 		clearMessage.classList.remove("message_error");
+		while(clearMessage.firstElementChild) clearMessage.removeChild(clearMessage.firstElementChild);
 	});
+	clearMessage.appendChild(clearCancelButton);
 });
