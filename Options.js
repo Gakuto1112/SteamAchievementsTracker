@@ -1,3 +1,6 @@
+let importExportMessageTimer;
+let clearMessageTimer;
+
 function createButtonElement(label) {
 	const buttonElement = document.createElement("DIV");
 	buttonElement.classList.add("button");
@@ -21,7 +24,7 @@ importButton.addEventListener("click", () => {
 			importExportMessage.classList.remove("message_error");
 			importExportMessageBody.innerText = message;
 			importExportMessage.appendChild(importExportMessageBody);
-			setTimeout(() => {
+			importExportMessageTimer = setTimeout(() => {
 				importExportMessage.classList.remove("message_ok");
 				while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
 			}, 3000);
@@ -34,13 +37,12 @@ importButton.addEventListener("click", () => {
 			importExportMessage.classList.add("message_error");
 			importExportMessageBody.innerText = message;
 			importExportMessage.appendChild(importExportMessageBody);
-			setTimeout(() => {
+			importExportMessageTimer = setTimeout(() => {
 				importExportMessage.classList.remove("message_error");
 				while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
 			}, 3000);
 		}
 
-		importExportMessage.appendChild(importExportMessageBody);
 		if(fileInput.value.split(".")[1] == "json") {
 			const reader = new FileReader();
 			reader.addEventListener("load", () => {
@@ -56,10 +58,13 @@ importButton.addEventListener("click", () => {
 				catch {
 					errorMessage("ファイルの読み込みに失敗しました。ファイルの形式が正しくない場合があります。");
 				}
+				while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+				clearTimeout(importExportMessageTimer);
 				importButton.classList.add("button_disabled");
 				importExportMessage.classList.add("message_ok");
 				importExportMessage.classList.remove("message_error");
 				importExportMessageBody.innerText = "データをインポート方法を選択して下さい。";
+				importExportMessage.appendChild(importExportMessageBody);
 				const importReplaceButton = createButtonElement("置き換え");
 				importReplaceButton.style.marginRight = "3px";
 				importReplaceButton.addEventListener("click", () => {
@@ -126,9 +131,12 @@ document.getElementById("export").addEventListener("click", () => {
 const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", () => {
 	const clearMessage = document.getElementById("clear_message");
+	while(clearMessage.firstElementChild) clearMessage.removeChild(clearMessage.firstElementChild);
+	clearTimeout(clearMessageTimer);
 	const clearMessageBody = document.createElement("P");
 	clearMessage.appendChild(clearMessageBody);
 	clearButton.classList.add("button_disabled");
+	clearMessage.classList.remove("message_ok");
 	clearMessage.classList.add("message_error");
 	clearMessageBody.innerText = "実績データを全て削除しますか？この操作は元に戻せません。";
 	const clearConfirmButton = createButtonElement("OK");
@@ -141,7 +149,7 @@ clearButton.addEventListener("click", () => {
 			clearMessage.classList.add("message_ok");
 			clearMessageBody.innerText = "実績データを削除しました。";
 			clearMessage.appendChild(clearMessageBody);
-			setTimeout(() => {
+			clearMessageTimer = setTimeout(() => {
 				clearMessage.classList.remove("message_ok");
 				while(clearMessage.firstElementChild) clearMessage.removeChild(clearMessage.firstElementChild);
 			}, 3000);
