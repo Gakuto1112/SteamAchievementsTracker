@@ -63,7 +63,12 @@ if(myNameElement) {
 			function getAppId() {
 				//アプリケーションのIDを返す
 				const urlSplit = location.href.split("/");
-				return urlSplit[urlSplit.length - 2];
+				for(let index in urlSplit) {
+					if(urlSplit[Number(index)] == "stats") {
+						if(urlSplit[Number(index) + 1] == "appid") return urlSplit[Number(index) + 2];
+						else return urlSplit[Number(index) + 1];
+					}
+				}
 			}
 			
 			function addAchievementsData(achievementName, data) {

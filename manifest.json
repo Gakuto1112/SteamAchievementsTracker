@@ -21,7 +21,7 @@
         		"https://steamcommunity.com/profiles/*/stats/*/",
         		"https://steamcommunity.com/profiles/*/stats/*/?tab=achievements",
         		"https://steamcommunity.com/profiles/*/stats/*/achievements/",
-        		"https://steamcommunity.com/profiles/*/stats/appid/*/achievements"
+        		"https://steamcommunity.com/profiles/*/stats/appid/*/achievements/"
     		]
 		}
 	],
