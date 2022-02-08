@@ -10,12 +10,16 @@ body::-webkit-scrollbar {
 	display: none;
 }
 h1 {
+	position: fixed;
+	display: block;
+	width: 100%;
+	top: 0px;
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	background-color: #171a21;
 }
 #message {
-	margin-bottom: 20px;
+	margin: 80px 0px 20px 0px;
 }
 #achievements_column {
 	margin: 20px;
