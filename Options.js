@@ -1,3 +1,10 @@
+function createButtonElement(label) {
+	const buttonElement = document.createElement("DIV");
+	buttonElement.classList.add("button");
+	buttonElement.innerText = label;
+	return buttonElement
+}
+
 document.getElementById("import").addEventListener("click", () => {
 	const fileInput = document.createElement("INPUT");
 	fileInput.type = "file";
@@ -12,16 +19,9 @@ document.getElementById("import").addEventListener("click", () => {
 			importExportMessageBody.innerText = "データをインポートしています...";
 			const reader = new FileReader();
 			reader.addEventListener("load", () => {
+				let readResult;
 				try {
-					chrome.storage.sync.set(JSON.parse(reader.result)).then(() => {
-						importExportMessage.classList.add("message_ok");
-						importExportMessage.classList.remove("message_error");
-						importExportMessageBody.innerText = "データをインポートしました。";
-						setTimeout(() => {
-							importExportMessage.classList.remove("message_ok");
-							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
-						}, 3000);
-					});
+					readResult = JSON.parse(reader.result);
 				}
 				catch {
 					importExportMessage.classList.remove("message_ok");
@@ -32,6 +32,115 @@ document.getElementById("import").addEventListener("click", () => {
 						while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
 					}, 3000);
 				}
+				importExportMessage.classList.add("message_ok");
+				importExportMessage.classList.remove("message_error");
+				importExportMessageBody.innerText = "データをインポート方法を選択して下さい。";
+				const importReplaceButton = createButtonElement("置き換え");
+				importReplaceButton.style.marginRight = "3px";
+				importReplaceButton.addEventListener("click", () => {
+					while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+					chrome.storage.sync.set(readResult).then(() => {
+						importExportMessageBody.innerText = "データをインポートしました。";
+						importExportMessage.appendChild(importExportMessageBody);
+						setTimeout(() => {
+							importExportMessage.classList.remove("message_ok");
+							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+						}, 3000);
+					}).catch(() => {
+						importExportMessage.classList.remove("message_ok");
+						importExportMessage.classList.add("message_error");
+						importExportMessageBody.innerText = "データの書き込みに失敗しました。";
+						importExportMessage.appendChild(importExportMessageBody);
+						setTimeout(() => {
+							importExportMessage.classList.remove("message_error");
+							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+						}, 3000);
+					});
+				});
+				importExportMessage.appendChild(importReplaceButton);
+				const importAddReplaceDuplicationButton = createButtonElement("追加（重複は置き換え）");
+				importAddReplaceDuplicationButton.style.marginRight = "3px";
+				importAddReplaceDuplicationButton.addEventListener("click", () => {
+					while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+					chrome.storage.sync.get(null).then((data) => {
+						const achievementsTrackData = data;
+						for(let appId in readResult) {
+							if(achievementsTrackData[appId]) {
+								for(let achievementName in readResult[appId]["achievements"]) achievementsTrackData[appId]["achievements"][achievementName] = readResult[appId]["achievements"][achievementName];
+							}
+							else achievementsTrackData[appId] = readResult[appId];
+						}
+						chrome.storage.sync.set(achievementsTrackData).then(() => {
+							importExportMessageBody.innerText = "データをインポートしました。";
+							importExportMessage.appendChild(importExportMessageBody);
+							setTimeout(() => {
+								importExportMessage.classList.remove("message_ok");
+								while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+							}, 3000);
+						}).catch(() => {
+							importExportMessage.classList.remove("message_ok");
+							importExportMessage.classList.add("message_error");
+							importExportMessageBody.innerText = "データの書き込みに失敗しました。";
+							importExportMessage.appendChild(importExportMessageBody);
+							setTimeout(() => {
+								importExportMessage.classList.remove("message_error");
+								while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+							}, 3000);
+						});
+					}).catch(() => {
+						importExportMessage.classList.remove("message_ok");
+						importExportMessage.classList.add("message_error");
+						importExportMessageBody.innerText = "データの読み込みに失敗しました。";
+						importExportMessage.appendChild(importExportMessageBody);
+						setTimeout(() => {
+							importExportMessage.classList.remove("message_error");
+							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+						}, 3000);
+					});
+				});
+				importExportMessage.appendChild(importAddReplaceDuplicationButton);
+				const importAddButton = createButtonElement("追加");
+				importAddButton.addEventListener("click", () => {
+					while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+					chrome.storage.sync.get(null).then((data) => {
+						const achievementsTrackData = data;
+						for(let appId in readResult) {
+							if(achievementsTrackData[appId]) {
+								for(let achievementName in readResult[appId]["achievements"]) {
+									if(!achievementsTrackData[appId]["achievements"][achievementName]) achievementsTrackData[appId]["achievements"][achievementName] = readResult[appId]["achievements"][achievementName];
+								}
+							}
+							else achievementsTrackData[appId] = readResult[appId];
+						}
+						chrome.storage.sync.set(achievementsTrackData).then(() => {
+							importExportMessageBody.innerText = "データをインポートしました。";
+							importExportMessage.appendChild(importExportMessageBody);
+							setTimeout(() => {
+								importExportMessage.classList.remove("message_ok");
+								while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+							}, 3000);
+						}).catch(() => {
+							importExportMessage.classList.remove("message_ok");
+							importExportMessage.classList.add("message_error");
+							importExportMessageBody.innerText = "データの書き込みに失敗しました。";
+							importExportMessage.appendChild(importExportMessageBody);
+							setTimeout(() => {
+								importExportMessage.classList.remove("message_error");
+								while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+							}, 3000);
+						});
+					}).catch(() => {
+						importExportMessage.classList.remove("message_ok");
+						importExportMessage.classList.add("message_error");
+						importExportMessageBody.innerText = "データの読み込みに失敗しました。";
+						importExportMessage.appendChild(importExportMessageBody);
+						setTimeout(() => {
+							importExportMessage.classList.remove("message_error");
+							while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+						}, 3000);
+					});
+				});
+				importExportMessage.appendChild(importAddButton);
 			});
 			reader.readAsText(fileInput.files[0]);
 		}
@@ -66,9 +175,7 @@ clearButton.addEventListener("click", () => {
 	clearButton.classList.add("button_disabled");
 	clearMessage.classList.add("message_error");
 	clearMessageBody.innerText = "実績データを全て削除しますか？この操作は元に戻せません。";
-	const clearConfirmButton = document.createElement("DIV");
-	clearConfirmButton.classList.add("button");
-	clearConfirmButton.innerText = "OK";
+	const clearConfirmButton = createButtonElement("OK");
 	clearConfirmButton.style.marginRight = "3px";
 	clearConfirmButton.addEventListener("click", () => {
 		chrome.storage.sync.clear().then(() => {
@@ -85,9 +192,7 @@ clearButton.addEventListener("click", () => {
 		});
 	});
 	clearMessage.appendChild(clearConfirmButton);
-	const clearCancelButton = document.createElement("DIV");
-	clearCancelButton.classList.add("button");
-	clearCancelButton.innerText = "キャンセル";
+	const clearCancelButton = createButtonElement("キャンセル");
 	clearCancelButton.addEventListener("click", () => {
 		clearButton.classList.remove("button_disabled");
 		clearMessage.classList.remove("message_error");
