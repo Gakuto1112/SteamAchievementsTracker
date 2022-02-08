@@ -5,7 +5,8 @@ function createButtonElement(label) {
 	return buttonElement
 }
 
-document.getElementById("import").addEventListener("click", () => {
+const importButton = document.getElementById("import");
+importButton.addEventListener("click", () => {
 	const fileInput = document.createElement("INPUT");
 	fileInput.type = "file";
 	fileInput.accept = ".json";
@@ -15,6 +16,7 @@ document.getElementById("import").addEventListener("click", () => {
 
 		function okMessage(message) {
 			while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+			importButton.classList.remove("button_disabled");
 			importExportMessage.classList.add("message_ok");
 			importExportMessage.classList.remove("message_error");
 			importExportMessageBody.innerText = message;
@@ -27,6 +29,7 @@ document.getElementById("import").addEventListener("click", () => {
 
 		function errorMessage(message) {
 			while(importExportMessage.firstElementChild) importExportMessage.removeChild(importExportMessage.firstElementChild);
+			importButton.classList.remove("button_disabled");
 			importExportMessage.classList.remove("message_ok");
 			importExportMessage.classList.add("message_error");
 			importExportMessageBody.innerText = message;
@@ -47,10 +50,16 @@ document.getElementById("import").addEventListener("click", () => {
 				let readResult;
 				try {
 					readResult = JSON.parse(reader.result);
+					chrome.storage.sync.get(null).then((data) => {
+						if(Object.keys(data).length == 0) {
+							chrome.storage.sync.set(readResult).then(() => okMessage("データをインポートしました。")).catch(() => errorMessage("データの書き込みに失敗しました。"));
+						}
+					}).catch(() => errorMessage("データの読み込みに失敗しました。"));
 				}
 				catch {
 					errorMessage("ファイルの読み込みに失敗しました。ファイルの形式が正しくない場合があります。");
 				}
+				importButton.classList.add("button_disabled");
 				importExportMessage.classList.add("message_ok");
 				importExportMessage.classList.remove("message_error");
 				importExportMessageBody.innerText = "データをインポート方法を選択して下さい。";
