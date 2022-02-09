@@ -86,7 +86,7 @@ if(myNameElement) {
 				}
 				catch(error) {
 					if(error.message == "Extension context invalidated.") {
-						alert("【SteamAchievementsTracker】拡張機能の更新されました。ページを再読み込みして下さい。なお、今回の変更は保存できません。");
+						alert("【SteamAchievementsTracker】拡張機能が更新されました。ページを再読み込みして下さい。なお、今回の変更は保存できません。");
 					}
 				}
 			}
@@ -101,7 +101,7 @@ if(myNameElement) {
 					}
 					catch(error) {
 						if(error.message == "Extension context invalidated.") {
-							alert("【SteamAchievementsTracker】拡張機能の更新されました。ページを再読み込みして下さい。なお、今回の変更は保存できません。");
+							alert("【SteamAchievementsTracker】拡張機能が更新されました。ページを再読み込みして下さい。なお、今回の変更は保存できません。");
 							return;
 						}
 					}
@@ -111,7 +111,7 @@ if(myNameElement) {
 				}
 				catch(error) {
 					if(error.message == "Extension context invalidated.") {
-						alert("【SteamAchievementsTracker】拡張機能の更新されました。ページを再読み込みして下さい。なお、今回の変更は保存できません。");
+						alert("【SteamAchievementsTracker】拡張機能が更新されました。ページを再読み込みして下さい。なお、今回の変更は保存できません。");
 					}
 				}
 			}		
