@@ -48,9 +48,13 @@ h1 {
 }
 .drawer_arrow {
 	user-select: none;
+	transition: transform 0.3s;
 }
 .drawer_arrow_hover {
 	color: #67c1f5;
+}
+.drawer_arrow_open {
+	transform: rotateX(180deg);
 }
 .game_title_text {
 	margin-left: 10px;
@@ -61,15 +65,13 @@ h1 {
 	cursor: pointer;
 }
 .achievements_list {
-	display: none;
+	display: flex;
 	flex-direction: column;
+	height: 0px;
 	margin: 0px 5px 0px 5px;
 	background-color: #111923;
 	overflow: hidden;
 	transition: 0.3s;
-}
-.achievements_list_open {
-	display: flex;
 }
 .achievement_row {
 	display: flex;

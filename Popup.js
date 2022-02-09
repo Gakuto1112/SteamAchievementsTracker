@@ -51,13 +51,13 @@ chrome.storage.sync.get(null, (data) => {
 				const achievementsList = document.createElement("DIV");
 				achievementsList.classList.add("achievements_list");
 				gameTitle.addEventListener("click", () => {
-					if(achievementsList.classList.contains("achievements_list_open")) {
-						achievementsList.classList.remove("achievements_list_open");
-						drawerArrow.innerText = "▼";
+					if(achievementsList.clientHeight == 0) {
+						achievementsList.style.height = achievementsList.childElementCount * 58 + "px";
+						drawerArrow.classList.add("drawer_arrow_open");
 					}
 					else {
-						achievementsList.classList.add("achievements_list_open");
-						drawerArrow.innerText = "▲";
+						achievementsList.removeAttribute("style");
+						drawerArrow.classList.remove("drawer_arrow_open");
 					}
 				});
 				Object.keys(achievementsTrackData[appId]["achievements"]).forEach((achievementName) => {
@@ -94,6 +94,7 @@ chrome.storage.sync.get(null, (data) => {
 							if(confirm(achievementsTrackData[appId]["name"] + "の実績「" + achievementName + "」の追跡を解除しますか？" )) {
 								delete achievementsTrackData[appId]["achievements"][achievementName];
 								achievementRow.remove();
+								achievementsList.style.height = achievementsList.childElementCount * 58 + "px";
 								let upVotedAchievementFound = false;
 								for(let achievementNameInApp in achievementsTrackData[appId]["achievements"]) {
 									if(achievementsTrackData[appId]["achievements"][achievementNameInApp]["vote"] == 1) {
