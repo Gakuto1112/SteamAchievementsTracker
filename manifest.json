@@ -3,6 +3,11 @@
 	"name": "Steam実績トラッカー",
 	"version": "1.0.0",
 	"description": "Steamで取得できそうな実績をマークし、後で確認できるようにします。",
+	"icons": {
+		"16": "icon/icon16.png",
+		"48": "icon/icon48.png",
+		"128": "icon/icon128.png"
+	},
 	"permissions": [
 		"storage"
 	],
