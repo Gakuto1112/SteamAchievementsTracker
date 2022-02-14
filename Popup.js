@@ -4,6 +4,7 @@ function steamLink() {
 }
 
 steamLink();
+document.getElementById("option").addEventListener("click", () => chrome.runtime.openOptionsPage());
 chrome.storage.sync.get(null, (data) => {
 	const achievementsTrackData = data;
 	const appNameSortArray = [];

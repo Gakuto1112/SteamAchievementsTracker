@@ -19,6 +19,15 @@ h1 {
 	text-align: center;
 	background-color: #171a21;
 }
+#option {
+	position: fixed;
+	width: 20px;
+	height: 20px;
+	top: 10px;
+	left: 570px;
+	cursor: pointer;
+	z-index: 2;
+}
 #message {
 	margin: 80px 0px 20px 0px;
 }
