@@ -33,6 +33,12 @@ if(myNameElement) {
 				achievementRowElement.lastElementChild.lastElementChild.lastElementChild.firstElementChild.firstElementChild.classList.remove("sat_bad_icon_clicked");
 				removeAchievementsData(achievementRowElement.lastElementChild.firstElementChild.firstElementChild.innerText);
 			}
+
+			function isUnlockedAchievement(achievementRow) {
+				//未解除の実績か調べる
+				if(achievementRow.tagName != "BR") return achievementRow.lastElementChild.lastElementChild.classList.contains("achieveUnlockTime");
+				else return false
+			}
 		
 			function sortAchievements() {
 				/*実績の並べ替え
@@ -44,7 +50,7 @@ if(myNameElement) {
 				const achievementListElement = document.getElementById("personalAchieve");
 				const achievementList = Array.from(achievementListElement.children);
 				achievementList.sort((firstElement, secondElement) => {
-					if((firstElement.hasAttribute("data-panel") || secondElement.hasAttribute("data-panel")) || (firstElement.tagName == "BR" || secondElement.tagName == "BR")) return 0;
+					if((isUnlockedAchievement(firstElement) || isUnlockedAchievement(secondElement)) || (firstElement.tagName == "BR" || secondElement.tagName == "BR")) return 0;
 					else if(firstElement.firstElementChild.classList.contains("achieveHiddenBox") || secondElement.firstElementChild.classList.contains("achieveHiddenBox")) return 1;
 					else {
 						let firstElementValue = achievementsOrderedList.indexOf(firstElement.lastElementChild.firstElementChild.firstElementChild.innerHTML);
@@ -117,12 +123,12 @@ if(myNameElement) {
 			}		
 
 			Array.from(document.getElementById("personalAchieve").children).forEach((achievementRow) => {
-				if(achievementRow.hasAttribute("data-panel") && achievementsTrackData[getAppId()]) {
+				if(isUnlockedAchievement(achievementRow) && achievementsTrackData[getAppId()]) {
 					for(let achievementName in achievementsTrackData[getAppId()]["achievements"]) {
 						if(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText == achievementName) removeAchievementsData(achievementName)
 					}
 				}
-				else if(achievementRow.tagName == "DIV" && !achievementRow.hasAttribute("data-panel") && achievementRow.firstElementChild.classList.contains("achieveImgHolder")) {
+				else if(achievementRow.tagName == "DIV" && !isUnlockedAchievement(achievementRow) && achievementRow.firstElementChild.classList.contains("achieveImgHolder")) {
 					//順序リストに追加
 					achievementsOrderedList.push(achievementRow.lastElementChild.firstElementChild.firstElementChild.innerText);
 					//ボタンの生成
