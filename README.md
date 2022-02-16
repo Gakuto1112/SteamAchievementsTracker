@@ -1,5 +1,5 @@
 # Steam実績トラッカー
-**Chrome Webストア**：準備中
+**Chrome Webストア**：https://chrome.google.com/webstore/detail/steam%E5%AE%9F%E7%B8%BE%E3%83%88%E3%83%A9%E3%83%83%E3%82%AB%E3%83%BC/gklkindmaodlleecplhhaoacbkbecneh
 
 Steamで獲得できそうな実績をマークし、後で確認できるようにするChrome拡張機能です。
 
